@@ -28,6 +28,8 @@ function App() {
 
   // Create React Hook to cycle through the categories in the array above
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
+  // React hook to determine if the contact button in the Nav bar is selected (conditional render the form)
+  const [contactSelected, setContactSelected] = useState(false);
 
   return (
     <div>
@@ -35,11 +37,19 @@ function App() {
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}  
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {/* If contact is selected, display form, otherwise, display gallery and about */}
+        {!contactSelected ? (
+          <>
+            <Gallery currentCategory={currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : (
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );
